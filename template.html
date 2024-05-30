@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <style>
+            * {
+                font-family: Helvetica;
+            }
+
+            body{
+                padding: 50px;
+            }
+
+            .title{
+                color: rgb(50, 50, 200);
+                font-size: 70px;
+                margin-top: 10px;
+            }
+
+            .contact p {
+                margin: 2px;
+            }
+
+            .bill-info {
+                display: flex;
+                justify-content: space-between;
+            }
+
+            .invoice-data {
+                display: flex;
+                justify-content: space-between;
+            }
+
+            .invoice-data h2 {
+                margin-right: 10px;
+            }
+
+            .invoice-data-entry {
+                justify-content: center;
+                line-height: 35px;
+            }
+
+            .bills-header {
+                display: flex;
+                justify-content: space-between;
+            }
+
+            .bill {
+                display: flex;
+                justify-content: space-between;
+            }
+
+        </style>
+    </head>
+    <body>
+        <h1 class="title">INVOICE</h1>
+        <div class="contact">
+            <h3>Gonzales & Sons Management LLC</h3>
+            <p>Susan Gonzales</p>
+            <p>27 Eastwood Dr</p>
+            <p>Hanover, PA 17331</p>
+            <p>717-688-4379</p>
+            <p>susangonzales1@comcast.net</p>
+        </div>
+        <div class="bill-info">
+            <div class="bill-to">
+                <h2>BILL TO</h2>
+                <p>Caeleb Balanesi</p>
+            </div>
+            <div>
+                <div class="invoice-data">
+                    <h2>INVOICE #</h2>
+                    <p class="invoice-data-entry">135</p>
+                </div>
+                <div class="invoice-data">
+                    <h2>INVOICE DATE</h2>
+                    <p class="invoice-data-entry">05/05/2024</p>
+                </div>
+            </div>
+        </div>
+        <div class="bills">
+            <div class="bills-header">
+                <h2>DESCRIPTION</h2>
+                <h2>AMOUNT</h2>
+            </div>
+            <div class="bill">
+                <p>Yo mama</p>
+                <p>10.00</p>
+            </div>
+            <div class="bill">
+                <p>Yo dada</p>
+                <p>10.00</p>
+            </div>
+            <div class="bill">
+                <p>Yo gama</p>
+                <p>10.00</p>
+            </div>
+            <div class="bill">
+                <p>Yo gapa</p>
+                <p>10.00</p>
+            </div>
+        </div>
+        <div class="total">
+            <h2>TOTAL $40.00</h2>
+        </div>
+    </body>
+</html>
