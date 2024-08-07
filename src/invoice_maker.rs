@@ -21,12 +21,13 @@ pub struct Invoice {
 
 #[derive(Clone, Deserialize, Serialize, Debug)]
 pub struct Bill {
-    description: String,
-    amount: i32,
+    pub description: String,
+    pub amount: i32,
+    pub extra_paragraphs: Option<Vec<String>>,
 }
 
 pub fn create_invoice(invoice: Invoice) -> Result<()> {
-    let invoice = format!("{}", html! {
+    let invoice_html = format!("{}", html! {
         : doctype::HTML;
         html {
             head {
@@ -36,11 +37,11 @@ pub fn create_invoice(invoice: Invoice) -> Result<()> {
                             font-family: Helvetica;
                         }
                         
-                        body{
+                        body {
                             padding: 50px;
                         }
         
-                        .title{
+                        .title {
                             color: rgb(50, 50, 200);
                             font-size: 70px;
                             margin-top: 10px;
@@ -77,6 +78,20 @@ pub fn create_invoice(invoice: Invoice) -> Result<()> {
                         .bill {
                             display: flex;
                             justify-content: space-between;
+                            flex-direction: column;
+                        }
+
+                        .bill-header {
+                            display: flex;
+                            justify-content: space-between;
+                        }
+
+                        .extra-info {
+                            padding-top: 2px;
+                            margin-top: 6px;
+                            margin-left: 24px;
+                            font-size: 16px;
+                            color: rgb(100, 100, 100);
                         }
                     "#;
                 }
@@ -94,16 +109,16 @@ pub fn create_invoice(invoice: Invoice) -> Result<()> {
                 div(class="bill-info") {
                     div(class="bill-to") {
                         h2 { : "BILL TO" }
-                        p { : invoice.clone().bill_to}
+                        p { : invoice.clone().bill_to }
                     }
                     div {
                         div(class="invoice-data") {
                             h2 { : "INVOICE #" }
-                            p(class="invoice-data-entry") { : invoice.clone().invoice_number}
+                            p(class="invoice-data-entry") { : invoice.clone().invoice_number }
                         }
                         div(class="invoice-data") {
                             h2 { : "INVOICE DATE" }
-                            p(class="invoice-data-entry") { : invoice.clone().invoice_date}
+                            p(class="invoice-data-entry") { : invoice.clone().invoice_date }
                         }
                     }
                 }
@@ -114,8 +129,19 @@ pub fn create_invoice(invoice: Invoice) -> Result<()> {
                     }
                     @ for i in 0..invoice.bills.len() {
                         div(class="bill") {
-                            p { : &invoice.bills[i].description }
-                            p { : String::from("$") + &invoice.bills[i].amount.to_string() }
+                            div(class="bill-header") {
+                                p { : &invoice.bills[i].description }
+                                p { : String::from("$") + &invoice.bills[i].amount.to_string() }
+                            }
+                            @ if let Some(extra_paragraphs) = &invoice.bills[i].extra_paragraphs {
+                                ul(class="extra-info") {
+                                    @ for paragraph in extra_paragraphs {
+                                        @ if !paragraph.is_empty() {
+                                            li { : paragraph }
+                                        }
+                                    }
+                                }
+                            }
                         }
                     }
                 }
@@ -127,7 +153,7 @@ pub fn create_invoice(invoice: Invoice) -> Result<()> {
     });
 
     let mut html_file = File::create("foo.html")?;
-    html_file.write_all(invoice.as_bytes())?;
+    html_file.write_all(invoice_html.as_bytes())?;
 
     let output = Command::new("html2pdf")
         .args(&[
