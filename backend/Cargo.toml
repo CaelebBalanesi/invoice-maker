@@ -1,0 +1,16 @@
+[package]
+name = "invoice-maker"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+horrorshow = "0.8.4"
+html2pdf = "0.7"
+axum = "0.7.5"
+axum_static = "1.7.1"
+tokio = { version = "1", features = ["full"] }
+serde = "1.0.203"
+anyhow = "1.0.44"
+tower-http = {version = "0.5.2", features = ["cors"]}

@@ -1,0 +1,76 @@
+<div class="container">
+  <h1>Invoice Creator</h1>
+  <form (ngSubmit)="onSubmit(form)" #form="ngForm">
+    <div class="form-group">
+      <label for="businessName">Business Name:</label>
+      <input type="text" id="businessName" name="businessName" [(ngModel)]="invoice.businessName" required>
+    </div>
+    
+    <div class="form-group">
+      <label for="invoicerName">Invoicer's Name:</label>
+      <input type="text" id="invoicerName" name="invoicerName" [(ngModel)]="invoice.invoicerName" required>
+    </div>
+    
+    <div class="form-group">
+      <label for="address">Address:</label>
+      <input type="text" id="address" name="address" [(ngModel)]="invoice.address" required>
+    </div>
+    
+    <div class="form-group">
+      <label for="city">City:</label>
+      <input type="text" id="city" name="city" [(ngModel)]="invoice.city" required>
+    </div>
+    
+    <div class="form-group">
+      <label for="state">State:</label>
+      <input type="text" id="state" name="state" [(ngModel)]="invoice.state" required>
+    </div>
+    
+    <div class="form-group">
+      <label for="zip">Zip Code:</label>
+      <input type="text" id="zip" name="zip" [(ngModel)]="invoice.zip" required>
+    </div>
+    
+    <div class="form-group">
+      <label for="phone">Phone Number:</label>
+      <input type="tel" id="phone" name="phone" [(ngModel)]="invoice.phone" required>
+    </div>
+    
+    <div class="form-group">
+      <label for="email">Email:</label>
+      <input type="email" id="email" name="email" [(ngModel)]="invoice.email" required>
+    </div>
+    
+    <div class="form-group">
+      <label for="invoiceNumber">Invoice Number:</label>
+      <input type="text" id="invoiceNumber" name="invoiceNumber" [(ngModel)]="invoice.invoiceNumber" required>
+    </div>
+    
+    <div class="form-group">
+      <label for="date">Date:</label>
+      <input type="date" id="date" name="date" [(ngModel)]="invoice.date" required>
+    </div>
+    
+    <div class="form-group">
+      <label for="invoiceeName">Invoicee's Name:</label>
+      <input type="text" id="invoiceeName" name="invoiceeName" [(ngModel)]="invoice.invoiceeName" required>
+    </div>
+    
+    <div class="form-group">
+      <label>Bills:</label>
+      <div *ngFor="let bill of invoice.bills; let i = index" class="bill-group">
+        <input type="text" placeholder="Bill Description" [(ngModel)]="bill.description" name="billDescription{{i}}" required>
+        <input type="number" placeholder="Amount" [(ngModel)]="bill.amount" name="billAmount{{i}}" required>
+        <div *ngFor="let paragraph of bill.extraParagraphs; let j = index; trackBy: trackByIndex">
+          <textarea placeholder="Extra Paragraph" [(ngModel)]="bill.extraParagraphs[j]" name="billExtraParagraph{{i}}{{j}}"></textarea>
+          <button type="button" (click)="removeParagraph(i, j)">Remove Paragraph</button>
+        </div>
+        <button type="button" (click)="addParagraph(i)">Add Paragraph</button>
+        <button type="button" (click)="removeBill(i)">Remove Bill</button>
+      </div>
+      <button type="button" (click)="addBill()">Add Bill</button>
+    </div>
+    
+    <button type="submit">Create Invoice</button>
+  </form>
+</div>
